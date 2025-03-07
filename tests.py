@@ -109,3 +109,21 @@ class TestBooksCollectorNew:
         result = book_name in collector.get_list_of_favorites_books()
         assert result == expected
 
+    @pytest.mark.parametrize(
+        "initial_favorites, book_to_remove, expected",
+        [
+            (["Война миров", "Сияние"], "Война миров", ["Сияние"]),
+            (["Война миров", "Сияние"], "Сияние", ["Война миров"]),
+            (["Война миров", "Сияние"], "Такой книге нет", ["Война миров", "Сияние"]),
+        ],
+    )
+    def test_delete_book_from_favorites(
+            self, collector, initial_favorites, book_to_remove, expected
+    ):
+        for book in initial_favorites:
+            collector.add_new_book(book)
+            collector.add_book_in_favorites(book)
+        collector.delete_book_from_favorites(book_to_remove)
+        result = collector.get_list_of_favorites_books()
+        assert result == expected
+
