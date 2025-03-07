@@ -87,11 +87,25 @@ class TestBooksCollectorNew:
             ([("Русалочка", "Мультфильмы"), ("Вокруг света за 80 дней", "Комедии")], ["Русалочка", "Вокруг света за 80 дней"]),
         ],
     )
-
-
     def test_get_books_for_children(self, collector, books, expected):
         for book_name, book_genre in books:
             collector.add_new_book(book_name)
             collector.set_book_genre(book_name, book_genre)
         result = collector.get_books_for_children()
         assert result == expected
+
+    @pytest.mark.parametrize(
+        "book_name, expected",
+        [
+            ("Война миров", True),
+            ("Сияние", True),
+            ("Такой книги нет", False),
+        ],
+    )
+    def test_add_book_in_favorites(self, collector, book_name, expected):
+        if book_name != "Такой книге нет":
+            collector.add_new_book(book_name)
+        collector.add_book_in_favorites(book_name)
+        result = book_name in collector.get_list_of_favorites_books()
+        assert result == expected
+
