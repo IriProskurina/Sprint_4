@@ -143,3 +143,21 @@ class TestBooksCollectorNew:
             collector.add_book_in_favorites(favorite)
             result = collector.get_list_of_favorites_books()
             assert result == expected
+
+    @pytest.mark.parametrize(
+        "books, expected",
+        [
+            (
+                [("Война миров", "Фантастика"), ("Сияние", "Ужасы")],
+                {"Война миров": "Фантастика", "Сияние": "Ужасы"},
+            ),
+            ([("Шерлок Холмс", "Детективы")], {"Шерлок Холмс": "Детективы"}),
+            ([], {}),
+        ],
+    )
+    def test_get_books_genre(self, collector, books, expected):
+        for book_name, genre in books:
+            collector.add_new_book(book_name)
+            collector.set_book_genre(book_name, genre)
+        result = collector.get_book_genre()
+        assert result == expected
