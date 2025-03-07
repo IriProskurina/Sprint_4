@@ -1,6 +1,7 @@
 class BooksCollector:
 
     def __init__(self):
+        self.books = {}
         self.books_genre = {}
         self.favorites = []
         self.genre = ['Фантастика', 'Ужасы', 'Детективы', 'Мультфильмы', 'Комедии']
@@ -57,4 +58,4 @@ class BooksCollector:
         return self.favorites
 
     def get_books_rating(self):
-        pass
+        return self.books_genre
