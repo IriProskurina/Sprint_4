@@ -79,3 +79,19 @@ class TestBooksCollectorNew:
         result = collector.get_books_with_specific_genre(genre)
         assert result == expected
 
+    @pytest.mark.parametrize(
+        "book, expected",
+        [
+            ([("Война миров", "Фантастика"), ("Сияние", "Ужасы")], ["Война миров"]),
+            ([("Война миров", "Фантастика"), ("Шерлок Холмс", "Детективы")], ["Война миров"]),
+            ([("Русалочка", "Мультфильмы"), ("Вокруг света за 80 дней", "Комедии")], ["Русалочка", "Вокруг света за 80 дней"]),
+        ],
+    )
+
+
+    def test_get_books_for_children(self, collector, books, expected):
+        for book_name, book_genre in books:
+            collector.add_new_book(book_name)
+            collector.set_book_genre(book_name, book_genre)
+        result = collector.get_books_for_children()
+        assert result == expected
