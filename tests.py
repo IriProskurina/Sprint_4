@@ -176,5 +176,4 @@ class TestBooksCollectorNew:
             collector.set_book_genre(book_name, genre)
             collector.add_book_in_favorites(book_name)
         result = book_name in collector.get_list_of_favorites_books()
-        assert result == expected
-git
+        assert result == expected 1
